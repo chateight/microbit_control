@@ -1,0 +1,26 @@
+
+[package]
+edition = "2024"
+name = "rust_starter"
+version = "0.1.0"
+license = "MIT or Apache-2.0"
+
+
+[dependencies]
+cortex-m = "0.7.7"
+cortex-m-rt = "0.7.5"
+rp235x-hal = "0.3"
+embedded-hal = "0.2"
+#embedded-hal = "1.0.0"　does not support rp235x-hal yet
+defmt = "1.0.1"
+defmt-rtt = "1.0.1"
+panic-probe = { version = "1.0", features = ["print-defmt"] }
+
+[build-dependencies]
+regex = "1.11.0"
+
+[target.'cfg( target_arch = "arm" )'.dependencies]
+panic-probe = { version = "1", features = ["print-defmt"] }
+
+[target."thumbv8m.main-none-eabihf".dependencies]
+rp235x-hal = { version = "0.3", features = ["rt", "critical-section-impl"] }
