@@ -44,8 +44,9 @@ pub static IMAGE_DEF: hal::block::ImageDef = hal::block::ImageDef::secure_exe();
 /// External high-speed crystal on the Raspberry Pi Pico 2 board is 12 MHz.
 /// Adjust if your board has a different frequency
 const XTAL_FREQ_HZ: u32 = 12_000_000u32;
-const DELAY: u32 = 1000; // μs delay
-const SAMPLES: u32 = 250;
+const DELAY: u32 = 1000; // loop delay
+const SAMPLING_INTERVAL: u32 = 10;
+const SAMPLES: u32 = 500;
 
 /// Entry point to our bare-metal application.
 ///
@@ -107,6 +108,7 @@ fn main() -> ! {
         for _ in 0..SAMPLES {
             let v: u16 = adc.read(&mut adc_pin).unwrap();
             sum += v as u32;
+            delay.delay_us(SAMPLING_INTERVAL);
         }
 
         let avg = (sum / SAMPLES) as u16;
