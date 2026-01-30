@@ -8,8 +8,6 @@ use embedded_hal::adc::OneShot;
 use embedded_hal::blocking::delay::DelayUs;
 use embedded_hal::PwmPin;
 
-#[cfg(target_arch = "riscv32")]
-use panic_halt as _;
 #[cfg(target_arch = "arm")]
 use panic_probe as _;
 
@@ -19,9 +17,6 @@ use hal::entry;
 #[cfg(rp2350)]
 use rp235x_hal as hal;
 
-#[cfg(rp2040)]
-use rp2040_hal as hal;
-
 // use bsp::entry;
 // use bsp::hal;
 // use rp_pico as bsp;
@@ -30,10 +25,6 @@ use rp2040_hal as hal;
 /// need this to help the ROM bootloader get our code up and running.
 /// Note: This boot block is not necessary when using a rp-hal based BSP
 /// as the BSPs already perform this step.
-#[unsafe(link_section = ".boot2")]
-#[used]
-#[cfg(rp2040)]
-pub static BOOT2: [u8; 256] = rp2040_boot2::BOOT_LOADER_W25Q080;
 
 /// Tell the Boot ROM about our application
 #[unsafe(link_section = ".start_block")]

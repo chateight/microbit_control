@@ -67,7 +67,7 @@
         "reveal": "always",
         "panel": "dedicated"
       },
-      "problemMatcher": "$rustc",
+      //"problemMatcher": "$rustc",
       "options": {
         "env": {
           "PICOTOOL_PATH": "${command:raspberry-pi-pico.getPicotoolPath}",
