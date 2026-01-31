@@ -7,6 +7,7 @@ use hal::pac;
 use embedded_hal::adc::OneShot;
 use embedded_hal::blocking::delay::DelayUs;
 use embedded_hal::PwmPin;
+use embedded_hal::digital::v2::OutputPin;
 
 #[cfg(target_arch = "arm")]
 use panic_probe as _;
@@ -91,6 +92,10 @@ fn main() -> ! {
 
     let mut pwm_channel = pwm.channel_a;
     let _pwm_pin = pins.gpio0.into_function::<hal::gpio::FunctionPwm>(); // GP0 as a PWM output
+
+    // 6. LED ON
+    let mut led_pin = pins.gpio25.into_push_pull_output();
+    led_pin.set_high().unwrap();
 
     loop {
         let mut sum: u32 = 0;
